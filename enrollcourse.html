@@ -1,0 +1,2150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Easy Learn Courses</title>
+        <link rel="icon" type="image/png" href="/image/elearning.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --transition-base: 220ms cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      [data-theme="light"] .hero-card,
+      [data-theme="light"] .reminder-card,
+      [data-theme="light"] .certificate-card,
+      [data-theme="light"] .dash-card,
+      [data-theme="light"] .player-sidebar {
+        background: #fff;
+        border-color: rgba(15, 21, 53, 0.08);
+        box-shadow: 0 30px 60px rgba(15, 21, 53, 0.08);
+      }
+
+      :root {
+        --bg: #030516;
+        --card: #0d1126;
+        --muted: #9ca8d9;
+        --border: rgba(255, 255, 255, 0.12);
+        --primary: #7f7bff;
+        --primary-dark: #5b58d6;
+        --accent: #42d9ff;
+        --text: #f4f6ff;
+        --danger: #ff7b7b;
+        --success: #5ef3b4;
+        --radius: 18px;
+      }
+
+      [data-theme="light"] {
+        --bg: #ecf2ff;
+        --card: #ffffff;
+        --muted: #5a6390;
+        --border: rgba(15, 21, 53, 0.12);
+        --primary: #5d5fef;
+        --primary-dark: #3f42d0;
+        --accent: #1fbafc;
+        --text: #0f1535;
+        --danger: #ff5d7f;
+        --success: #0fce92;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+      }
+
+      body {
+        background: radial-gradient(
+            circle at 10% 20%,
+            rgba(124, 123, 255, 0.25),
+            transparent 45%
+          ),
+          radial-gradient(
+            circle at 85% -10%,
+            rgba(66, 217, 255, 0.25),
+            transparent 40%
+          ),
+          var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        line-height: 1.6;
+        transition: background 250ms ease, color 250ms ease;
+      }
+
+      [data-theme="light"] body {
+        background: radial-gradient(
+            circle at 0% 0%,
+            rgba(93, 95, 239, 0.12),
+            transparent 35%
+          ),
+          radial-gradient(
+            circle at 100% 10%,
+            rgba(31, 186, 252, 0.25),
+            transparent 45%
+          ),
+          var(--bg);
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      button {
+        border: none;
+        cursor: pointer;
+        border-radius: var(--radius);
+        padding: 0.9rem 1.6rem;
+        font-weight: 600;
+        transition: transform 200ms ease, filter 200ms ease;
+      }
+
+      button:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+      }
+
+      button:hover:not(:disabled) {
+        transform: translateY(-1px);
+        filter: brightness(1.1);
+      }
+
+      .primary {
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+        color: #fff;
+      }
+
+      .secondary {
+        background: rgba(255, 255, 255, 0.08);
+        color: #fff;
+      }
+
+      .ghost {
+        background: transparent;
+        color: var(--text);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+      }
+
+      .hidden {
+        display: none !important;
+      }
+
+      .hero {
+        padding: 2.5rem clamp(1.5rem, 5vw, 6rem) 4rem;
+        background: radial-gradient(
+            circle at 20% 20%,
+            rgba(66, 217, 255, 0.08),
+            transparent 55%
+          ),
+          radial-gradient(
+            circle at 80% 0%,
+            rgba(127, 123, 255, 0.18),
+            transparent 45%
+          );
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 3rem;
+        position: relative;
+      }
+
+      .logo {
+        font-size: 1.4rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 1.75rem;
+        color: var(--muted);
+      }
+
+      .nav-links a:hover {
+        color: #fff;
+      }
+
+      .nav-actions {
+        display: flex;
+        gap: 0.75rem;
+        align-items: center;
+      }
+
+      .theme-toggle {
+        width: 44px;
+        height: 44px;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      .user-menu {
+        position: relative;
+      }
+
+      .user-chip {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        padding: 0.45rem 0.9rem;
+        border-radius: 999px;
+      }
+
+      .user-chip .avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: var(--accent);
+        color: #03131d;
+        display: grid;
+        place-items: center;
+        font-weight: 700;
+      }
+
+      .user-chip .user-info p {
+        font-weight: 600;
+        font-size: 0.85rem;
+      }
+
+      .user-chip .user-info small {
+        font-size: 0.75rem;
+        color: var(--muted);
+      }
+
+      .user-chip .chevron {
+        font-size: 1rem;
+        transform-origin: center;
+        transition: transform 200ms ease;
+      }
+
+      .user-chip[aria-expanded="true"] .chevron {
+        transform: rotate(180deg);
+      }
+
+      .user-dropdown {
+        position: absolute;
+        right: 0;
+        top: calc(100% + 0.5rem);
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        min-width: 220px;
+        box-shadow: 0 20px 60px rgba(5, 6, 10, 0.35);
+        padding: 0.75rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        z-index: 50;
+      }
+
+      .user-dropdown button {
+        width: 100%;
+        text-align: left;
+        padding: 0.75rem 1rem;
+        border-radius: calc(var(--radius) - 6px);
+        background: rgba(255, 255, 255, 0.04);
+      }
+
+      .nav-toggle {
+        display: none;
+        flex-direction: column;
+        gap: 0.35rem;
+        background: transparent;
+        border: none;
+      }
+
+      .nav-toggle span {
+        width: 26px;
+        height: 2px;
+        background: #fff;
+      }
+
+      .hero-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 3.5rem;
+        align-items: center;
+      }
+
+      .hero h1 {
+        font-size: clamp(2.5rem, 5vw, 4rem);
+        margin-bottom: 1rem;
+      }
+
+      .subtitle {
+        color: var(--muted);
+        margin-bottom: 2rem;
+        max-width: 520px;
+      }
+
+      .eyebrow {
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        font-size: 0.8rem;
+        color: var(--accent);
+        margin-bottom: 1rem;
+      }
+
+      .cta-group {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 2.5rem;
+      }
+
+      .hero-stats {
+        display: flex;
+        gap: 2rem;
+        color: var(--muted);
+      }
+
+      .hero-stats h3 {
+        font-size: 2rem;
+        color: #fff;
+      }
+
+      .hero-card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: var(--radius);
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        box-shadow: 0 30px 80px rgba(3, 4, 10, 0.5);
+      }
+
+      .focus-bar {
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 999px;
+        height: 8px;
+        overflow: hidden;
+      }
+
+      .focus-bar.large {
+        height: 12px;
+      }
+
+      .focus-progress {
+        height: 100%;
+        width: 0;
+        border-radius: inherit;
+        background: linear-gradient(90deg, var(--accent), var(--primary));
+        transition: width 300ms ease;
+      }
+
+      .section {
+        padding: 4rem clamp(1.5rem, 5vw, 6rem);
+        scroll-margin-top: 90px;
+      }
+
+      .section-subtitle {
+        color: var(--muted);
+        max-width: 580px;
+        margin-top: 0.5rem;
+      }
+
+      .course-grid,
+      .dash-card,
+      .reminder-card,
+      .certificate-card,
+      .player-sidebar {
+        animation: fadeIn 0.9s ease both;
+      }
+
+      .section-header,
+      .dash-header {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      .course-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1.5rem;
+      }
+
+      .course-card {
+        background: var(--card);
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        transition: transform var(--transition-base),
+          border-color var(--transition-base);
+      }
+
+      .course-card:hover {
+        transform: translateY(-6px);
+        border-color: rgba(66, 217, 255, 0.6);
+      }
+
+      .course-card h3 {
+        font-size: 1.2rem;
+      }
+
+      .course-card p {
+        color: var(--muted);
+        flex: 1;
+      }
+
+      .course-meta {
+        display: flex;
+        justify-content: space-between;
+        color: var(--muted);
+        font-size: 0.85rem;
+      }
+
+      .filters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .chip {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 999px;
+        padding: 0.35rem 1rem;
+        border: 1px solid transparent;
+        color: var(--muted);
+      }
+
+      .chip.active {
+        border-color: var(--accent);
+        color: #fff;
+      }
+
+      .dash {
+        background: rgba(255, 255, 255, 0.02);
+      }
+
+      .dash-card {
+        background: var(--card);
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        padding: 2rem;
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        gap: 2rem;
+        align-items: center;
+        transition: box-shadow var(--transition-base),
+          transform var(--transition-base);
+      }
+
+      .dash-card:hover {
+        box-shadow: 0 25px 60px rgba(3, 4, 10, 0.35);
+        transform: translateY(-4px);
+      }
+
+      .dash-list {
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: var(--radius);
+        padding: 1.5rem;
+        min-height: 220px;
+        color: var(--muted);
+      }
+
+      .certificate-banner {
+        margin-top: 1.4rem;
+        padding: 1rem 1.25rem;
+        border-radius: var(--radius);
+        background: rgba(94, 243, 180, 0.1);
+        border: 1px solid rgba(94, 243, 180, 0.45);
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .enrollment {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.25rem;
+      }
+
+      .enrollment:last-child {
+        margin-bottom: 0;
+      }
+
+      .enrollment h4 {
+        margin-bottom: 0.25rem;
+      }
+
+      .enrollment-progress {
+        width: 120px;
+        height: 6px;
+        background: rgba(255, 255, 255, 0.12);
+        border-radius: 999px;
+        overflow: hidden;
+      }
+
+      .enrollment-progress div {
+        height: 100%;
+        background: var(--accent);
+      }
+
+      .user-pill {
+        padding: 0.6rem 1rem;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        color: var(--muted);
+      }
+
+      .player {
+        display: grid;
+        grid-template-columns: minmax(280px, 3fr) minmax(240px, 1fr);
+        gap: 2rem;
+      }
+
+      .player-wrapper {
+        aspect-ratio: 16 / 9;
+        border-radius: calc(var(--radius) - 6px);
+        overflow: hidden;
+        border: 1px solid var(--border);
+      }
+
+      .player iframe {
+        width: 100%;
+        height: 100%;
+      }
+
+      .player-controls {
+        display: flex;
+        gap: 1rem;
+        margin: 1.5rem 0;
+      }
+
+      .player-controls button {
+        flex: 1;
+        background: rgba(255, 255, 255, 0.05);
+        transition: transform var(--transition-base),
+          background var(--transition-base);
+      }
+
+      .player-controls button:hover:not(:disabled) {
+        background: rgba(66, 217, 255, 0.2);
+      }
+
+      .player-controls button.btn-pressed {
+        background: var(--primary);
+        color: #fff;
+        transform: translateY(1px) scale(0.98);
+      }
+
+      .player-sidebar {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 1.5rem;
+        max-height: 620px;
+        overflow-y: auto;
+      }
+
+      .sidebar-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+      }
+
+      .lecture-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+
+      .lecture-item {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid transparent;
+        border-radius: var(--radius);
+        padding: 0.85rem 1rem;
+        cursor: pointer;
+        transition: border-color 150ms ease, background 150ms ease;
+      }
+
+      .lecture-item.active {
+        border-color: var(--accent);
+        background: rgba(0, 212, 255, 0.12);
+      }
+
+      .lecture-item.completed {
+        opacity: 0.6;
+      }
+
+      .lecture-item:hover {
+        border-color: rgba(0, 212, 255, 0.4);
+      }
+      [data-theme="light"] .hero-card,
+      [data-theme="light"] .reminder-card,
+      [data-theme="light"] .certificate-card,
+      [data-theme="light"] .dash-card,
+      [data-theme="light"] .player-sidebar {
+        background: #fff;
+        border-color: rgba(15, 21, 53, 0.08);
+        box-shadow: 0 30px 60px rgba(15, 21, 53, 0.08);
+      }
+
+      .hero-card {
+        animation: float 6s ease-in-out infinite alternate;
+      }
+
+      .course-grid > .course-card:nth-child(odd) {
+        animation: fadeUp 0.8s ease both;
+      }
+
+      .reminders {
+        background: rgba(255, 255, 255, 0.02);
+      }
+
+      .reminder-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 2rem;
+        display: grid;
+        gap: 1.5rem;
+      }
+
+      .reminder-form {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 1rem;
+      }
+
+      .reminder-form label {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      .reminder-form input {
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 0.85rem;
+        color: var(--text);
+      }
+
+      [data-theme="light"] .reminder-form input {
+        background: #f4f6ff;
+        border-color: rgba(15, 21, 53, 0.15);
+      }
+
+      .reminder-list {
+        border-top: 1px solid var(--border);
+        padding-top: 1rem;
+        display: grid;
+        gap: 0.75rem;
+        color: var(--muted);
+      }
+
+      .reminder-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.85rem 1rem;
+        border-radius: calc(var(--radius) - 6px);
+        background: rgba(255, 255, 255, 0.03);
+      }
+
+      .certificate-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 2rem;
+        display: grid;
+        gap: 1rem;
+      }
+
+      .certificate-body {
+        border-top: 1px solid var(--border);
+        padding-top: 1.5rem;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+
+      .certificate-status {
+        text-align: right;
+        color: var(--muted);
+      }
+
+      .certificate-actions {
+        display: flex;
+        gap: 0.6rem;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        margin-top: 0.5rem;
+      }
+
+      .toast {
+        position: fixed;
+        bottom: 1.5rem;
+        right: 1.5rem;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: calc(var(--radius) - 6px);
+        padding: 0.85rem 1.25rem;
+        box-shadow: 0 20px 50px rgba(3, 4, 10, 0.4);
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 200ms ease, transform 200ms ease;
+        z-index: 999;
+      }
+
+      .toast.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .footer {
+        padding: 2rem;
+        text-align: center;
+        color: var(--muted);
+      }
+
+      .auth-modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(5, 6, 10, 0.9);
+        display: grid;
+        place-items: center;
+        z-index: 999;
+      }
+
+      .auth-card {
+        background: var(--card);
+        border-radius: var(--radius);
+        padding: 2rem;
+        border: 1px solid var(--border);
+        width: min(420px, 90vw);
+        position: relative;
+      }
+
+      .auth-card .close {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        font-size: 1.5rem;
+        background: transparent;
+        padding: 0;
+      }
+
+      .auth-tabs {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .auth-tabs .tab {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        padding: 0.75rem;
+      }
+
+      .auth-tabs .tab.active {
+        border-color: var(--accent);
+      }
+
+      .auth-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .auth-form label {
+        font-size: 0.9rem;
+        color: var(--muted);
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+      }
+
+      .auth-form input {
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 0.85rem;
+        color: #fff;
+      }
+
+      .helper {
+        font-size: 0.85rem;
+        color: var(--muted);
+      }
+
+      .helper span {
+        color: var(--accent);
+        cursor: pointer;
+      }
+
+      .auth-status {
+        margin-top: 1rem;
+        font-size: 0.85rem;
+        color: var(--muted);
+        text-align: center;
+      }
+
+      @media (max-width: 960px) {
+        .nav-links {
+          display: none;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          background: var(--card);
+          padding: 1.5rem;
+          border-radius: var(--radius);
+          flex-direction: column;
+          gap: 1rem;
+          border: 1px solid var(--border);
+          box-shadow: 0 30px 60px rgba(3, 4, 10, 0.35);
+          z-index: 40;
+        }
+
+        .nav-actions {
+          display: none;
+        }
+
+        .nav-toggle {
+          display: flex;
+        }
+
+        .nav.open .nav-links {
+          display: flex;
+        }
+
+        .nav.open .nav-actions {
+          display: flex;
+          flex-direction: column;
+          position: absolute;
+          top: calc(100% + 260px);
+          right: 1.5rem;
+          background: var(--card);
+          border: 1px solid var(--border);
+          border-radius: var(--radius);
+          padding: 1rem;
+          gap: 0.75rem;
+          box-shadow: 0 30px 60px rgba(3, 4, 10, 0.35);
+          z-index: 30;
+        }
+
+        .dash-card {
+          grid-template-columns: 1fr;
+        }
+
+        .player {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .btn-pressed {
+        background: var(--primary) !important;
+        color: #fff !important;
+      }
+
+      @keyframes float {
+        from {
+          transform: translateY(0px);
+        }
+        to {
+          transform: translateY(-10px);
+        }
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 600px) {
+        .hero-stats {
+          flex-direction: column;
+        }
+
+        .cta-group {
+          flex-direction: column;
+        }
+
+        .hero-card {
+          padding: 1.5rem;
+        }
+
+        .reminder-form {
+          grid-template-columns: 1fr;
+        }
+
+        .certificate-body {
+          flex-direction: column;
+          text-align: left;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="hero" id="home">
+      <nav class="nav">
+        <div class="logo">EasyLearn</div>
+        <div class="nav-links">
+          <a href="#home">Home</a>
+          <a href="#courses">Courses</a>
+          <a href="#dashboard">Dashboard</a>
+          <a href="#course-player">Lectures</a>
+          <a href="#reminders">Reminders</a>
+        </div>
+        <div class="nav-actions">
+          <button
+            class="ghost theme-toggle"
+            id="themeToggle"
+            aria-label="Toggle color theme"
+          >
+            <span>🌛</span>
+          </button>
+          <div class="user-menu hidden" id="userMenu">
+            <button
+              class="user-chip"
+              id="userMenuToggle"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <div class="avatar" id="userAvatar">FL</div>
+              <div class="user-info">
+                <p id="userName">Learner</p>
+                <small id="userEmail">guest@focuslearn.dev</small>
+              </div>
+              <span class="chevron">⌄</span>
+            </button>
+            <div class="user-dropdown hidden" id="userDropdown">
+              <button type="button" id="openDashboard">View dashboard</button>
+              <button type="button" class="ghost" id="logoutBtn">Logout</button>
+            </div>
+          </div>
+          <button class="ghost" id="loginTrigger">Login</button>
+          <button class="primary" id="signupTrigger">Sign Up</button>
+        </div>
+        <button
+          class="nav-toggle"
+          id="navToggle"
+          aria-label="Toggle navigation"
+        >
+          <span></span><span></span><span></span>
+        </button>
+      </nav>
+
+      <div class="hero-content">
+        <div>
+          <p class="eyebrow">EasyLearn writes</p>
+          <h1>Craft better learning stories with a calmer interface.</h1>
+          <p class="subtitle">
+            Every module keeps context visible, typography balanced, and your
+            focus bar live so progress never feels lost.
+          </p>
+          <div class="cta-group">
+            <button class="primary" id="exploreCourses">Explore Courses</button>
+            <button class="secondary" id="watchDemo">Watch Demo</button>
+          </div>
+          <div class="hero-stats">
+            <div>
+              <h3>120+</h3>
+              <p>Micro lessons</p>
+            </div>
+            <div>
+              <h3>6k</h3>
+              <p>Learners onboarded</p>
+            </div>
+            <div>
+              <h3>92%</h3>
+              <p>Completion rate</p>
+            </div>
+          </div>
+        </div>
+        <div class="hero-card">
+          <div class="focus-widget">
+            <p>Focus meter</p>
+            <div class="focus-bar">
+              <div class="focus-progress" id="heroFocus"></div>
+            </div>
+            <p class="focus-status" id="heroFocusLabel">0% engaged</p>
+          </div>
+          <div class="next-lecture">
+            <p>Up next</p>
+            <h4 id="nextLectureTitle">Pick a course to get started</h4>
+            <p id="nextLectureCourse">No course selected</p>
+          </div>
+          <button class="secondary" id="startLearning">Start Learning</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="section" id="courses">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">Curated catalog</p>
+            <h2>Explore tracks tailored to your flow</h2>
+            <p class="section-subtitle">
+              Every track now includes certificate unlocks once you hit 100%.
+            </p>
+          </div>
+          <div class="filters">
+            <button class="chip active" data-filter="all">All</button>
+            <button class="chip" data-filter="design">Design</button>
+            <button class="chip" data-filter="development">Development</button>
+            <button class="chip" data-filter="product">Product</button>
+          </div>
+        </div>
+        <div class="course-grid" id="courseGrid"></div>
+      </section>
+
+      <section class="section dash" id="dashboard">
+        <div class="dash-header">
+          <div>
+            <p class="eyebrow">Your dashboard</p>
+            <h2>Stay accountable with the focus bar</h2>
+          </div>
+          <div class="user-pill" id="userPill">Guest mode</div>
+        </div>
+        <div class="dash-card">
+          <div class="dash-progress">
+            <div class="progress-label">
+              <p>Overall progress</p>
+              <p id="overallPercent">0%</p>
+            </div>
+            <div class="focus-bar large">
+              <div class="focus-progress" id="overallFocus"></div>
+            </div>
+            <div class="certificate-banner hidden" id="certificateBanner">
+              <p>Congrats! You unlocked your FocusLearn certificate.</p>
+              <button class="secondary" id="viewCertificate">
+                View certificate
+              </button>
+            </div>
+          </div>
+          <div class="dash-list" id="enrolledList">
+            <p>No enrollments yet. Enroll to start tracking progress.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section player" id="course-player">
+        <div class="player-left">
+          <p class="eyebrow">Lecture player</p>
+          <h2 id="playerCourseTitle">Select a course</h2>
+          <div class="player-wrapper">
+            <iframe
+              id="lectureFrame"
+              src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+              title="YouTube video player"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+          </div>
+          <div class="player-controls">
+            <button id="prevLecture" disabled>Previous</button>
+            <button id="markAsRead" disabled>Mark as Read</button>
+            <button id="nextLecture" disabled>Next</button>
+          </div>
+          <div class="lecture-meta">
+            <h3 id="lectureTitle">No lecture selected</h3>
+            <p id="lectureDescription">
+              Pick a lecture from the list to begin.
+            </p>
+          </div>
+        </div>
+        <div class="player-sidebar">
+          <div class="sidebar-header">
+            <h4>Lecture outline</h4>
+            <span id="lectureCount">0 lessons</span>
+          </div>
+          <ul class="lecture-list" id="lectureList">
+            <li class="empty">Enroll and select a course to view lessons.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section reminders" id="reminders">
+        <div class="reminder-card">
+          <div>
+            <p class="eyebrow">Study reminders</p>
+            <h2>Schedule gentle nudges that keep momentum.</h2>
+            <p class="section-subtitle">
+              Add a date and time, and we will surface the reminder on your
+              dashboard.
+            </p>
+          </div>
+          <form class="reminder-form" id="reminderForm">
+            <label>
+              Reminder title
+              <input
+                type="text"
+                name="title"
+                placeholder="Deep work sprint"
+                required
+              />
+            </label>
+            <label>
+              Date
+              <input type="date" name="date" required />
+            </label>
+            <label>
+              Time
+              <input type="time" name="time" required />
+            </label>
+            <button class="primary" type="submit">Schedule reminder</button>
+          </form>
+          <div class="reminder-list" id="reminderList">
+            <p>No reminders yet. Add one to stay accountable.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section certificate hidden" id="certificateSection">
+        <div class="certificate-card">
+          <p class="eyebrow">Verified certificate</p>
+          <h2>Your FocusLearn completion badge</h2>
+          <p class="section-subtitle">
+            Share this badge with hiring managers or friends—it proves you
+            completed every lesson in your selected course.
+          </p>
+          <div class="certificate-body">
+            <div>
+              <h3 id="certificateName">Learner Name</h3>
+              <p id="certificateCourse">Course name</p>
+            </div>
+            <div class="certificate-status">
+              <p>
+                Issued on
+                <span id="certificateDate"></span>
+              </p>
+              <div class="certificate-actions">
+                <button class="secondary" id="downloadCertificate">
+                  Download PDF
+                </button>
+                <button class="ghost" id="previewCertificate">
+                  Preview PDF
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>
+        FocusLearn © <span id="year"></span>. Designed for distraction-free
+        growth.
+      </p>
+    </footer>
+
+    <div class="auth-modal hidden" id="authModal">
+      <div class="auth-card">
+        <button class="close" id="closeAuth">×</button>
+        <div class="auth-tabs">
+          <button class="tab active" data-tab="login">Login</button>
+          <button class="tab" data-tab="signup">Sign Up</button>
+        </div>
+        <form class="auth-form" id="loginForm" data-type="login">
+          <label
+            >Email
+            <input type="email" name="email" required />
+          </label>
+          <label
+            >Password
+            <input type="password" name="password" required />
+          </label>
+          <button class="primary" type="submit">Login</button>
+          <p class="helper">
+            Need an account? <span data-tab-switch="signup">Sign up</span>
+          </p>
+        </form>
+        <form class="auth-form hidden" id="signupForm" data-type="signup">
+          <label
+            >Full name
+            <input type="text" name="name" required />
+          </label>
+          <label
+            >Email
+            <input type="email" name="email" required />
+          </label>
+          <label
+            >Password
+            <input type="password" name="password" required />
+          </label>
+          <button class="primary" type="submit">Create account</button>
+          <p class="helper">
+            Already registered? <span data-tab-switch="login">Login</span>
+          </p>
+        </form>
+        <p class="auth-status" id="authStatus">
+          Connect your Firebase project to enable auth.
+        </p>
+      </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  </body>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDyyOv23pgZau4NMap25ELNJeK2_q-hWQw",
+      authDomain: "my-auth-9ca91.firebaseapp.com",
+      projectId: "my-auth-9ca91",
+      storageBucket: "my-auth-9ca91.firebasestorage.app",
+      messagingSenderId: "982710575554",
+      appId: "1:982710575554:web:a6d86152f3fa5a003a365b",
+      measurementId: "G-KEYKG9C4CB",
+    };
+
+    const courses = [
+      {
+        id: "ux-foundations",
+        title: "UX Foundations",
+        description:
+          "Master discovery interviews, persona building, and accessible design systems.",
+        category: "design",
+        level: "Beginner",
+        duration: "4h 12m",
+        lectures: [
+          {
+            title: "The UX Mindset",
+            videoId: "Phx5x-5ZBA8",
+            description:
+              "Understand what a user-first mindset looks like in agile teams.",
+          },
+          {
+            title: "Research Playbook",
+            videoId: "WW1v7tB3LI8",
+            description:
+              "Turn raw customer chats into insight boards using a repeatable flow.",
+          },
+          {
+            title: "Wireframes to Systems",
+            videoId: "lJIrF4YjHfQ",
+            description:
+              "Translate low-fidelity sketches into modular design tokens.",
+          },
+        ],
+      },
+      {
+        id: "js-essentials",
+        title: "JavaScript Essentials",
+        description:
+          "A modern, project-first approach to mastering the language of the web.",
+        category: "development",
+        level: "Intermediate",
+        duration: "6h 45m",
+        lectures: [
+          {
+            title: "Modern Syntax Refresh",
+            videoId: "m55PTVUrlnA",
+            description:
+              "Review let/const, template literals, optional chaining, and modules.",
+          },
+          {
+            title: "Asynchronous Workflows",
+            videoId: "PoRJizFvM7s",
+            description:
+              "Promises vs async/await, race conditions, and cancellation patterns.",
+          },
+          {
+            title: "State Machines",
+            videoId: "Gk7n19nqG2Y",
+            description:
+              "How to model UI in deterministic machines for predictable logic.",
+          },
+        ],
+      },
+      {
+        id: "shipping-product",
+        title: "Shipping Product Strategy",
+        description:
+          "Operate like a product trio: plan discoveries, scope MVPs, and set focus metrics.",
+        category: "product",
+        level: "Advanced",
+        duration: "3h 20m",
+        lectures: [
+          {
+            title: "North-star Metrics",
+            videoId: "E5QqNQONNww",
+            description: "Map growth loops and align bets to one core metric.",
+          },
+          {
+            title: "MVP Prioritization",
+            videoId: "cPbKafmxKOA",
+            description:
+              "Score experiments and narrow scope without losing impact.",
+          },
+          {
+            title: "Stakeholder Narrative",
+            videoId: "dQw4w9WgXcQ",
+            description:
+              "Craft updates that keep leadership confident in your roadmap.",
+          },
+        ],
+      },
+      {
+        id: "data-visualization",
+        title: "Data Visualization Mastery",
+        description:
+          "Tell clearer stories with dashboards, narrative data decks, and motion-led charts.",
+        category: "product",
+        level: "Intermediate",
+        duration: "5h 05m",
+        lectures: [
+          {
+            title: "Charting Foundations",
+            videoId: "kK1Qw1D2Y5g",
+            description:
+              "Pick the right chart for your data, audience, and device.",
+          },
+          {
+            title: "Color Systems",
+            videoId: "hVimVzgtD6w",
+            description:
+              "Design palettes that balance accessibility, emotion, and brand.",
+          },
+          {
+            title: "Story-driven Dashboards",
+            videoId: "4QFzRi0ddSQ",
+            description:
+              "Build Notion/Figma dashboards that execs can navigate in seconds.",
+          },
+        ],
+      },
+      {
+        id: "ai-content-lab",
+        title: "AI Content Lab",
+        description:
+          "Blend prompt engineering with brand storytelling to ship polished copy faster.",
+        category: "development",
+        level: "Advanced",
+        duration: "4h 40m",
+        lectures: [
+          {
+            title: "Prompt Systems",
+            videoId: "2LLkAIk1S6k",
+            description:
+              "Draft reusable prompt libraries that capture brand tone and guardrails.",
+          },
+          {
+            title: "Editor Workflows",
+            videoId: "dA0VY0XcWJw",
+            description:
+              "Loop AI outputs through human QA without slowing your publishing cadence.",
+          },
+          {
+            title: "Responsible Shipping",
+            videoId: "3fumBcKC6RE",
+            description:
+              "Document sources, disclaimers, and approvals for comfort and compliance.",
+          },
+        ],
+      },
+    ];
+
+    const state = {
+      currentUser: null,
+      enrollments: {},
+      activeCourseId: null,
+      activeLectureIndex: 0,
+      reminders: [],
+    };
+
+    let auth;
+    let db;
+    const reminderTimers = new Map();
+    const THEME_STORAGE_KEY = "focuslearn-theme";
+    const EMAIL_ENDPOINT =
+      "https://us-central1-my-auth-9ca91.cloudfunctions.net/sendReminderEmail";
+
+    const dom = {
+      courseGrid: document.getElementById("courseGrid"),
+      lectureList: document.getElementById("lectureList"),
+      lectureFrame: document.getElementById("lectureFrame"),
+      lectureTitle: document.getElementById("lectureTitle"),
+      lectureDescription: document.getElementById("lectureDescription"),
+      lectureCount: document.getElementById("lectureCount"),
+      playerCourseTitle: document.getElementById("playerCourseTitle"),
+      nextLectureTitle: document.getElementById("nextLectureTitle"),
+      nextLectureCourse: document.getElementById("nextLectureCourse"),
+      prevLecture: document.getElementById("prevLecture"),
+      nextLecture: document.getElementById("nextLecture"),
+      markAsRead: document.getElementById("markAsRead"),
+      overallFocus: document.getElementById("overallFocus"),
+      overallPercent: document.getElementById("overallPercent"),
+      enrolledList: document.getElementById("enrolledList"),
+      heroFocus: document.getElementById("heroFocus"),
+      heroFocusLabel: document.getElementById("heroFocusLabel"),
+      userPill: document.getElementById("userPill"),
+      authModal: document.getElementById("authModal"),
+      authTabs: document.querySelectorAll(".auth-tabs .tab"),
+      authForms: {
+        login: document.getElementById("loginForm"),
+        signup: document.getElementById("signupForm"),
+      },
+      authStatus: document.getElementById("authStatus"),
+      logoutBtn: document.getElementById("logoutBtn"),
+      userMenu: document.getElementById("userMenu"),
+      userMenuToggle: document.getElementById("userMenuToggle"),
+      userDropdown: document.getElementById("userDropdown"),
+      userName: document.getElementById("userName"),
+      userEmailLabel: document.getElementById("userEmail"),
+      userAvatar: document.getElementById("userAvatar"),
+      openDashboardBtn: document.getElementById("openDashboard"),
+      themeToggle: document.getElementById("themeToggle"),
+      reminderForm: document.getElementById("reminderForm"),
+      reminderList: document.getElementById("reminderList"),
+      certificateBanner: document.getElementById("certificateBanner"),
+      viewCertificate: document.getElementById("viewCertificate"),
+      certificateSection: document.getElementById("certificateSection"),
+      certificateName: document.getElementById("certificateName"),
+      certificateCourse: document.getElementById("certificateCourse"),
+      certificateDate: document.getElementById("certificateDate"),
+      downloadCertificate: document.getElementById("downloadCertificate"),
+      previewCertificate: document.getElementById("previewCertificate"),
+      nav: document.querySelector(".nav"),
+      navLinks: document.querySelectorAll(".nav-links a"),
+    };
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+    const scrollToCourses = () =>
+      document.getElementById("courses").scrollIntoView({ behavior: "smooth" });
+    document.getElementById("exploreCourses").onclick = scrollToCourses;
+    document.getElementById("startLearning").onclick = scrollToCourses;
+    document.getElementById("watchDemo").onclick = () =>
+      document
+        .getElementById("course-player")
+        .scrollIntoView({ behavior: "smooth" });
+
+    const getStoredTheme = () =>
+      localStorage.getItem(THEME_STORAGE_KEY) || "dark";
+
+    const applyTheme = (mode) => {
+      document.documentElement.dataset.theme = mode;
+      localStorage.setItem(THEME_STORAGE_KEY, mode);
+    };
+
+    applyTheme(getStoredTheme());
+
+    document.getElementById("navToggle")?.addEventListener("click", (event) => {
+      event.stopPropagation();
+      dom.nav?.classList.toggle("open");
+    });
+
+    const closeUserMenu = () => {
+      dom.userDropdown?.classList.add("hidden");
+      dom.userMenuToggle?.setAttribute("aria-expanded", "false");
+    };
+
+    const updateUserMenuProfile = (user) => {
+      if (!user || !dom.userMenu) return;
+      const initials =
+        user.displayName
+          ?.split(" ")
+          .map((word) => word[0])
+          .join("")
+          .slice(0, 2)
+          .toUpperCase() || user.email.slice(0, 2).toUpperCase();
+      dom.userAvatar.textContent = initials;
+      dom.userName.textContent = user.displayName || "Creator";
+      dom.userEmailLabel.textContent = user.email;
+      closeUserMenu();
+    };
+
+    const showToast = (message) => {
+      const toast = document.createElement("div");
+      toast.className = "toast";
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      requestAnimationFrame(() => toast.classList.add("visible"));
+      setTimeout(() => {
+        toast.classList.remove("visible");
+        setTimeout(() => toast.remove(), 300);
+      }, 4000);
+    };
+
+    const pulseButton = (button) => {
+      if (!button) return;
+      button.classList.add("btn-pressed");
+      setTimeout(() => button.classList.remove("btn-pressed"), 220);
+    };
+
+    const toggleModal = (open) => {
+      dom.authModal.classList.toggle("hidden", !open);
+    };
+
+    const setActiveTab = (tab) => {
+      dom.authTabs.forEach((btn) =>
+        btn.classList.toggle("active", btn.dataset.tab === tab)
+      );
+      Object.entries(dom.authForms).forEach(([key, form]) =>
+        form.classList.toggle("hidden", key !== tab)
+      );
+    };
+
+    const initAuthModal = () => {
+      document.getElementById("loginTrigger").addEventListener("click", () => {
+        setActiveTab("login");
+        toggleModal(true);
+      });
+      document.getElementById("signupTrigger").addEventListener("click", () => {
+        setActiveTab("signup");
+        toggleModal(true);
+      });
+      document
+        .getElementById("closeAuth")
+        .addEventListener("click", () => toggleModal(false));
+      document.querySelectorAll("[data-tab-switch]").forEach((el) => {
+        el.addEventListener("click", () => {
+          setActiveTab(el.dataset.tabSwitch);
+        });
+      });
+    };
+
+    const renderCourses = (filter = "all") => {
+      dom.courseGrid.innerHTML = "";
+      courses
+        .filter((course) => filter === "all" || course.category === filter)
+        .forEach((course) => {
+          const enrolled = Boolean(state.enrollments[course.id]);
+          const percent = enrolled ? state.enrollments[course.id].percent : 0;
+          const card = document.createElement("article");
+          card.className = "course-card";
+          card.innerHTML = `
+        <div class="course-meta">
+          <span>${course.category}</span>
+          <span>${course.level}</span>
+        </div>
+        <h3>${course.title}</h3>
+        <p>${course.description}</p>
+        <div class="course-meta">
+          <span>${course.lectures.length} lessons</span>
+          <span>${course.duration}</span>
+        </div>
+        <div class="enrollment-actions">
+          ${enrolled ? `<p>${percent}% complete</p>` : "<p>Not enrolled</p>"}
+          <button class="primary" data-enroll="${course.id}">${
+            enrolled ? "Continue" : "Enroll"
+          }</button>
+        </div>
+      `;
+          dom.courseGrid.appendChild(card);
+        });
+    };
+
+    const updateFocusBar = () => {
+      const enrolledCourses = Object.values(state.enrollments);
+      if (!enrolledCourses.length) {
+        dom.overallPercent.textContent = "0%";
+        dom.overallFocus.style.width = "0%";
+        dom.heroFocus.style.width = "0%";
+        dom.heroFocusLabel.textContent = "0% engaged";
+        return;
+      }
+      const total =
+        enrolledCourses.reduce((acc, item) => acc + item.percent, 0) /
+        enrolledCourses.length;
+      dom.overallPercent.textContent = `${Math.round(total)}%`;
+      dom.overallFocus.style.width = `${total}%`;
+      dom.heroFocus.style.width = `${total}%`;
+      dom.heroFocusLabel.textContent = `${Math.round(total)}% engaged`;
+    };
+
+    const getCertifiedCourse = () => {
+      const completedEntry = Object.entries(state.enrollments).find(
+        ([, data]) => data.percent === 100
+      );
+      if (!completedEntry) return null;
+      const [courseId, data] = completedEntry;
+      const course = courses.find((c) => c.id === courseId);
+      return course
+        ? {
+            course,
+            enrollment: data,
+            courseId,
+          }
+        : null;
+    };
+
+    const updateCertificateUI = () => {
+      const certificate = getCertifiedCourse();
+      const hasCertificate = Boolean(certificate);
+      dom.certificateBanner?.classList.toggle("hidden", !hasCertificate);
+      if (!certificate) {
+        if (dom.certificateSection && !dom.certificateSection.dataset.sticky) {
+          dom.certificateSection.classList.add("hidden");
+        }
+        return;
+      }
+      const { course, enrollment } = certificate;
+      dom.certificateName.textContent =
+        state.currentUser?.displayName ||
+        state.currentUser?.email ||
+        "FocusLearn Learner";
+      dom.certificateCourse.textContent = course.title;
+      const issuedDate =
+        enrollment.updatedAt instanceof Date
+          ? enrollment.updatedAt
+          : new Date(enrollment.updatedAt || Date.now());
+      dom.certificateDate.textContent = issuedDate.toLocaleDateString();
+    };
+
+    const ensureCertificateUnlocked = () => {
+      const certificate = getCertifiedCourse();
+      if (!certificate) {
+        showToast("Complete a course to unlock your certificate.");
+        return null;
+      }
+      return certificate;
+    };
+
+    const buildCertificatePdf = async () => {
+      const certificate = ensureCertificateUnlocked();
+      if (!certificate) return null;
+      if (!window.html2canvas || !window.jspdf?.jsPDF) {
+        showToast("PDF generator not loaded yet. Please retry in a moment.");
+        return null;
+      }
+      const card = dom.certificateSection.querySelector(".certificate-card");
+      dom.certificateSection.classList.remove("hidden");
+      dom.certificateSection.dataset.sticky = "true";
+      const canvas = await window.html2canvas(card, {
+        backgroundColor: getComputedStyle(document.body).backgroundColor,
+        scale: window.devicePixelRatio,
+      });
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new window.jspdf.jsPDF("landscape", "pt", [
+        canvas.width,
+        canvas.height,
+      ]);
+      pdf.addImage(imgData, "PNG", 0, 0, canvas.width, canvas.height);
+      return {
+        pdf,
+        fileName: `FocusLearn-${dom.certificateCourse.textContent}.pdf`,
+      };
+    };
+
+    const downloadCertificatePdf = async () => {
+      const result = await buildCertificatePdf();
+      if (!result) return;
+      result.pdf.save(result.fileName);
+      showToast("PDF certificate downloaded.");
+    };
+
+    const previewCertificatePdf = async () => {
+      const result = await buildCertificatePdf();
+      if (!result) return;
+      const blobUrl = result.pdf.output("bloburl");
+      window.open(blobUrl, "_blank");
+      showToast("Certificate preview opened in a new tab.");
+    };
+    const reminderDateValue = (reminder) =>
+      new Date(`${reminder.date}T${reminder.time}`);
+
+    const renderReminders = () => {
+      if (!dom.reminderList) return;
+      if (!state.reminders.length) {
+        dom.reminderList.innerHTML =
+          "<p>No reminders yet. Add one to stay accountable.</p>";
+        return;
+      }
+      const sorted = [...state.reminders].sort(
+        (a, b) => reminderDateValue(a) - reminderDateValue(b)
+      );
+      dom.reminderList.innerHTML = sorted
+        .map(
+          (reminder) => `
+        <div class="reminder-item">
+          <div>
+            <strong>${reminder.title}</strong>
+            <p>${reminder.date} at ${reminder.time}</p>
+          </div>
+          <span>${new Date(
+            reminder.createdAt || Date.now()
+          ).toLocaleDateString()}</span>
+        </div>
+      `
+        )
+        .join("");
+    };
+
+    const scheduleReminderNotification = (reminder) => {
+      const target = reminderDateValue(reminder);
+      if (Number.isNaN(target.getTime())) return;
+      const notify = () => {
+        showToast(`Reminder: ${reminder.title} starts now`);
+        reminderTimers.delete(reminder.id);
+      };
+      const delay = target.getTime() - Date.now();
+      if (delay <= 0) {
+        notify();
+        return;
+      }
+      if (reminderTimers.has(reminder.id)) {
+        clearTimeout(reminderTimers.get(reminder.id));
+      }
+      const timeoutId = setTimeout(notify, delay);
+      reminderTimers.set(reminder.id, timeoutId);
+    };
+
+    const clearReminderTimers = () => {
+      reminderTimers.forEach((id) => clearTimeout(id));
+      reminderTimers.clear();
+    };
+
+    const persistReminder = async (reminder) => {
+      const collection = remindersCollection();
+      if (!collection) return;
+      await collection.doc(reminder.id).set({
+        ...reminder,
+        createdAt: reminder.createdAt || new Date().toISOString(),
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      });
+    };
+
+    const sendReminderEmail = async (reminder) => {
+      if (!state.currentUser || !EMAIL_ENDPOINT) return;
+      try {
+        await fetch(EMAIL_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: state.currentUser.email,
+            reminder,
+          }),
+        });
+      } catch (error) {
+        console.warn("Reminder email failed", error);
+      }
+    };
+
+    const hydrateReminders = async () => {
+      const collection = remindersCollection();
+      if (!collection) return;
+      const snapshot = await collection.get();
+      state.reminders = snapshot.docs.map((doc) => {
+        const data = doc.data();
+        return {
+          id: doc.id,
+          title: data.title,
+          date: data.date,
+          time: data.time,
+          createdAt: data.createdAt || new Date().toISOString(),
+        };
+      });
+      state.reminders.forEach(scheduleReminderNotification);
+      renderReminders();
+    };
+
+    const renderEnrollments = () => {
+      const entries = Object.entries(state.enrollments);
+      if (!entries.length) {
+        dom.enrolledList.innerHTML =
+          "<p>No enrollments yet. Enroll to start tracking progress.</p>";
+        return;
+      }
+      dom.enrolledList.innerHTML = entries
+        .map(([courseId, data]) => {
+          const course = courses.find((c) => c.id === courseId);
+          return `
+        <div class="enrollment">
+          <div>
+            <h4>${course.title}</h4>
+            <p>${data.completed.size}/${course.lectures.length} lessons</p>
+          </div>
+          <div class="enrollment-progress"><div style="width:${data.percent}%"></div></div>
+        </div>
+      `;
+        })
+        .join("");
+    };
+
+    const updateDashboard = () => {
+      renderCourses(
+        document.querySelector(".chip.active")?.dataset.filter ?? "all"
+      );
+      renderEnrollments();
+      updateFocusBar();
+      updateCertificateUI();
+    };
+
+    const renderLectureList = (course) => {
+      dom.lectureList.innerHTML = "";
+      course.lectures.forEach((lecture, index) => {
+        const li = document.createElement("li");
+        li.className = "lecture-item";
+        const enrollment = state.enrollments[course.id];
+        if (enrollment) {
+          if (enrollment.completed.has(index)) li.classList.add("completed");
+          if (state.activeLectureIndex === index) li.classList.add("active");
+        }
+        li.dataset.index = index;
+        li.textContent = lecture.title;
+        li.addEventListener("click", () => {
+          state.activeLectureIndex = index;
+          updatePlayer(course);
+        });
+        dom.lectureList.appendChild(li);
+      });
+      dom.lectureCount.textContent = `${course.lectures.length} lessons`;
+    };
+
+    const updatePlayer = (course) => {
+      if (!course) return;
+      const lecture = course.lectures[state.activeLectureIndex];
+      dom.playerCourseTitle.textContent = course.title;
+      dom.lectureTitle.textContent = lecture.title;
+      dom.lectureDescription.textContent = lecture.description;
+      dom.lectureFrame.src = `https://www.youtube.com/embed/${lecture.videoId.replace(
+        "/",
+        ""
+      )}`;
+      dom.prevLecture.disabled = state.activeLectureIndex === 0;
+      dom.nextLecture.disabled =
+        state.activeLectureIndex === course.lectures.length - 1;
+      dom.markAsRead.disabled = !state.enrollments[course.id];
+      renderLectureList(course);
+      dom.nextLectureTitle.textContent = lecture.title;
+      dom.nextLectureCourse.textContent = course.title;
+    };
+
+    const ensureEnrollment = (courseId) => {
+      if (!state.currentUser) {
+        toggleModal(true);
+        dom.authStatus.textContent = "Please login to enroll.";
+        return false;
+      }
+      if (!state.enrollments[courseId]) {
+        state.enrollments[courseId] = {
+          completed: new Set(),
+          percent: 0,
+          currentIndex: 0,
+          updatedAt: new Date(),
+        };
+        persistEnrollment(courseId);
+      }
+      return true;
+    };
+
+    const progressCollection = () => {
+      if (!db || !state.currentUser?.email) return null;
+      return db
+        .collection("userProgress")
+        .doc(state.currentUser.email)
+        .collection("enrollments");
+    };
+
+    const remindersCollection = () => {
+      if (!db || !state.currentUser?.email) return null;
+      return db
+        .collection("userProgress")
+        .doc(state.currentUser.email)
+        .collection("reminders");
+    };
+
+    const persistEnrollment = async (courseId) => {
+      const collection = progressCollection();
+      if (!collection) return;
+      state.enrollments[courseId].updatedAt = new Date();
+      const payload = {
+        completed: Array.from(state.enrollments[courseId].completed),
+        percent: state.enrollments[courseId].percent,
+        currentIndex: state.enrollments[courseId].currentIndex,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      };
+      await collection.doc(courseId).set(payload, { merge: true });
+    };
+
+    const hydrateEnrollments = async () => {
+      const collection = progressCollection();
+      if (!collection) return;
+      const snapshot = await collection.get();
+      snapshot.forEach((doc) => {
+        const data = doc.data();
+        state.enrollments[doc.id] = {
+          completed: new Set(data.completed || []),
+          percent: data.percent || 0,
+          currentIndex: data.currentIndex || 0,
+          updatedAt: data.updatedAt?.toDate?.()
+            ? data.updatedAt.toDate()
+            : data.updatedAt || new Date(),
+        };
+      });
+    };
+
+    const onCourseAction = (courseId) => {
+      if (!ensureEnrollment(courseId)) return;
+      state.activeCourseId = courseId;
+      const enrollment = state.enrollments[courseId];
+      state.activeLectureIndex = enrollment.currentIndex ?? 0;
+      const course = courses.find((c) => c.id === courseId);
+      updatePlayer(course);
+      updateDashboard();
+    };
+
+    dom.courseGrid.addEventListener("click", (event) => {
+      const btn = event.target.closest("[data-enroll]");
+      if (!btn) return;
+      onCourseAction(btn.dataset.enroll);
+      document
+        .getElementById("course-player")
+        .scrollIntoView({ behavior: "smooth" });
+    });
+
+    document.querySelectorAll(".chip").forEach((chip) => {
+      chip.addEventListener("click", () => {
+        document
+          .querySelectorAll(".chip")
+          .forEach((c) => c.classList.remove("active"));
+        chip.classList.add("active");
+        renderCourses(chip.dataset.filter);
+      });
+    });
+
+    const updateLectureState = (direction) => {
+      if (!state.activeCourseId) return;
+      const course = courses.find((c) => c.id === state.activeCourseId);
+      state.activeLectureIndex = Math.min(
+        course.lectures.length - 1,
+        Math.max(0, state.activeLectureIndex + direction)
+      );
+      state.enrollments[course.id].currentIndex = state.activeLectureIndex;
+      persistEnrollment(course.id);
+      updatePlayer(course);
+    };
+
+    dom.prevLecture.addEventListener("click", () => {
+      pulseButton(dom.prevLecture);
+      updateLectureState(-1);
+    });
+    dom.nextLecture.addEventListener("click", () => {
+      pulseButton(dom.nextLecture);
+      updateLectureState(1);
+    });
+
+    const markLectureAsRead = () => {
+      if (!state.activeCourseId) return;
+      const course = courses.find((c) => c.id === state.activeCourseId);
+      const enrollment = state.enrollments[course.id];
+      enrollment.completed.add(state.activeLectureIndex);
+      enrollment.percent = Math.round(
+        (enrollment.completed.size / course.lectures.length) * 100
+      );
+      enrollment.updatedAt = new Date();
+      persistEnrollment(course.id);
+      updatePlayer(course);
+      updateDashboard();
+    };
+
+    dom.markAsRead.addEventListener("click", () => {
+      pulseButton(dom.markAsRead);
+      markLectureAsRead();
+    });
+
+    dom.logoutBtn.addEventListener("click", async () => {
+      if (!auth) return;
+      closeUserMenu();
+      await auth.signOut();
+    });
+
+    dom.openDashboardBtn?.addEventListener("click", () => {
+      document
+        .getElementById("dashboard")
+        .scrollIntoView({ behavior: "smooth" });
+      dom.userDropdown?.classList.add("hidden");
+      dom.userMenuToggle?.setAttribute("aria-expanded", "false");
+    });
+
+    dom.viewCertificate?.addEventListener("click", () => {
+      const certificate = getCertifiedCourse();
+      if (!certificate) return;
+      if (dom.certificateSection) {
+        dom.certificateSection.classList.remove("hidden");
+        dom.certificateSection.dataset.sticky = "true";
+        dom.certificateSection.scrollIntoView({ behavior: "smooth" });
+      }
+    });
+
+    dom.downloadCertificate?.addEventListener("click", downloadCertificatePdf);
+    dom.previewCertificate?.addEventListener("click", previewCertificatePdf);
+
+    dom.reminderForm?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (!state.currentUser) {
+        toggleModal(true);
+        dom.authStatus.textContent = "Login to schedule reminders.";
+        return;
+      }
+      const formData = new FormData(dom.reminderForm);
+      const reminder = {
+        id:
+          crypto.randomUUID?.() ??
+          `${Date.now()}-${Math.floor(Math.random() * 1000)}`,
+        title: formData.get("title"),
+        date: formData.get("date"),
+        time: formData.get("time"),
+        createdAt: new Date().toISOString(),
+      };
+      state.reminders.push(reminder);
+      renderReminders();
+      scheduleReminderNotification(reminder);
+      await persistReminder(reminder);
+      await sendReminderEmail(reminder);
+      dom.reminderForm.reset();
+      showToast(`Reminder scheduled for ${reminder.date} ${reminder.time}`);
+    });
+
+    const wireForms = () => {
+      Object.values(dom.authForms).forEach((form) => {
+        form.addEventListener("submit", async (event) => {
+          event.preventDefault();
+          const formData = new FormData(form);
+          const email = formData.get("email");
+          const password = formData.get("password");
+          try {
+            if (form.dataset.type === "login") {
+              await auth.signInWithEmailAndPassword(email, password);
+            } else {
+              const name = formData.get("name");
+              const userCred = await auth.createUserWithEmailAndPassword(
+                email,
+                password
+              );
+              await userCred.user.updateProfile({ displayName: name });
+              await db.collection("userProfiles").doc(email).set({
+                name,
+                email,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+              });
+            }
+            toggleModal(false);
+          } catch (error) {
+            dom.authStatus.textContent = error.message;
+          }
+        });
+      });
+    };
+
+    const initFirebaseApp = () => {
+      if (!firebase?.apps?.length) {
+        firebase.initializeApp(firebaseConfig);
+      }
+      auth = firebase.auth();
+      db = firebase.firestore();
+      dom.authStatus.textContent = "Connected to Firebase.";
+
+      auth.onAuthStateChanged(async (user) => {
+        state.currentUser = user;
+        dom.logoutBtn.classList.toggle("hidden", !user);
+        document
+          .getElementById("loginTrigger")
+          .classList.toggle("hidden", !!user);
+        document
+          .getElementById("signupTrigger")
+          .classList.toggle("hidden", !!user);
+        dom.userMenu?.classList.toggle("hidden", !user);
+        dom.userPill.textContent = user ? user.email : "Guest mode";
+        if (user) {
+          updateUserMenuProfile(user);
+          state.enrollments = {};
+          state.reminders = [];
+          clearReminderTimers();
+          await hydrateEnrollments();
+          await hydrateReminders();
+          updateDashboard();
+        } else {
+          state.enrollments = {};
+          state.activeCourseId = null;
+          state.reminders = [];
+          clearReminderTimers();
+          renderReminders();
+          updateDashboard();
+          dom.certificateBanner?.classList.add("hidden");
+          if (dom.certificateSection) {
+            dom.certificateSection.classList.add("hidden");
+            delete dom.certificateSection.dataset.sticky;
+          }
+        }
+      });
+    };
+
+    const bootstrap = () => {
+      initAuthModal();
+      renderCourses();
+      renderReminders();
+      wireForms();
+      dom.themeToggle?.addEventListener("click", () => {
+        const next =
+          document.documentElement.dataset.theme === "light" ? "dark" : "light";
+        applyTheme(next);
+      });
+      dom.userMenuToggle?.addEventListener("click", (event) => {
+        event.stopPropagation();
+        const expanded =
+          dom.userMenuToggle.getAttribute("aria-expanded") === "true";
+        dom.userMenuToggle.setAttribute("aria-expanded", String(!expanded));
+        dom.userDropdown?.classList.toggle("hidden", expanded);
+      });
+      dom.navLinks.forEach((link) =>
+        link.addEventListener("click", () => dom.nav?.classList.remove("open"))
+      );
+      document.addEventListener("click", (event) => {
+        if (dom.userMenu && !dom.userMenu.contains(event.target)) {
+          closeUserMenu();
+        }
+        if (dom.nav && !dom.nav.contains(event.target)) {
+          dom.nav.classList.remove("open");
+        }
+      });
+      initFirebaseApp();
+    };
+
+    bootstrap();
+  </script>
+</html>

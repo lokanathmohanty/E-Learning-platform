@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🎓 Learning Dashboard</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(to right, #dbe9ff, #f6faff);
+        color: #333;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+      }
+
+      header {
+        background: #007bff;
+        color: white;
+        width: 100%;
+        text-align: center;
+        padding: 20px 0;
+        font-size: 1.8rem;
+        font-weight: 600;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        letter-spacing: 1px;
+      }
+
+      .dashboard {
+        width: 90%;
+        max-width: 950px;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        margin-top: 40px;
+        padding: 30px;
+      }
+
+      h2 {
+        text-align: center;
+        font-size: 1.5rem;
+        color: #007bff;
+        margin-bottom: 30px;
+      }
+
+      .course-card {
+        background: #f1f6ff;
+        border: 1px solid #cfe2ff;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+      }
+
+      .course-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+      }
+
+      .course-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #0056b3;
+        margin-bottom: 8px;
+      }
+
+      .progress-container {
+        background: #e0e7ff;
+        border-radius: 20px;
+        overflow: hidden;
+        height: 20px;
+        margin: 10px 0;
+      }
+
+      .progress-bar {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, #00c3ff, #007bff);
+        text-align: right;
+        color: white;
+        font-size: 0.8rem;
+        font-weight: bold;
+        padding-right: 5px;
+        border-radius: 20px;
+        transition: width 0.5s ease;
+      }
+
+      .completion-info {
+        color: #333;
+        font-size: 0.95rem;
+        margin-top: 5px;
+      }
+
+      .no-courses {
+        text-align: center;
+        font-size: 1rem;
+        color: #666;
+        padding: 30px;
+      }
+
+      .back-btn {
+        display: inline-block;
+        background: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        padding: 10px 20px;
+        font-weight: 600;
+        margin-top: 20px;
+        text-align: center;
+        transition: all 0.3s ease;
+      }
+
+      .back-btn:hover {
+        background: #0056b3;
+      }
+
+      footer {
+        text-align: center;
+        padding: 20px 0;
+        font-size: 0.9rem;
+        color: #777;
+        margin-top: auto;
+      }
+
+      @media (max-width: 600px) {
+        header {
+          font-size: 1.4rem;
+        }
+        .dashboard {
+          padding: 20px;
+        }
+        .course-title {
+          font-size: 1rem;
+        }
+      }
+
+      .resume-btn {
+  margin-top: 12px;
+  padding: 10px 16px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s ease;
+  
+}
+
+.resume-btn:hover {
+  background: #0056d2;
+}
+
+    </style>
+  </head>
+  <body>
+    <header>🎓 My Learning Dashboard</header>
+
+    <div class="dashboard">
+      <h2>Your Learning Progress</h2>
+      <div id="courseList"></div>
+      <div id="noCourses" class="no-courses">
+        🚀 No courses completed yet. Keep learning!
+      </div>
+      
+       
+
+    <footer>© 2025 Easy Learn Academy | All Rights Reserved</footer>
+
+     <script>
+    // Load python course data
+const progress = parseInt(localStorage.getItem("progress_python")) || 0;
+const completionDate = localStorage.getItem("completed_python");
+
+const courseList = document.getElementById("courseList");
+const noCourses = document.getElementById("noCourses");
+
+if (progress > 0) {
+  noCourses.style.display = "none";
+
+  const card = document.createElement("div");
+  card.className = "course-card";
+
+  card.innerHTML = `
+    <div class="course-title">🐍 Python Tutorial Course</div>
+
+    <div class="progress-container">
+      <div class="progress-bar" style="width:${progress}%">${progress}%</div>
+    </div>
+
+    <div class="completion-info">
+      ${
+        progress === 100
+          ? `✅ Completed on: <strong>${completionDate}</strong>`
+          : `⏳ In Progress: <strong>${progress}%</strong>`
+      }
+    </div>
+
+    <button class="resume-btn">Resume Course</button>
+  `;
+
+  courseList.appendChild(card);
+
+  // Redirect handler
+  document.querySelector(".resume-btn").addEventListener("click", () => {
+    window.location.href = "coursepy.html"// <-- Change to your course page
+  });
+}
+
+</script>
+
+ 
+  </body>
+</html>

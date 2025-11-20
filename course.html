@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Easy Learn</title>
+     <link rel="icon" type="image/png" href="/image/elearning.png" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/course.css">
+
+     
+  </head>
+<body>
+  
+     <!-- Creating Navigation Bar for easy learn platform. -->
+
+    <nav class="navbar">
+      <div class="logo">
+        <img src="image/logoocopy.png" alt="logo" />
+      </div>
+      <!-- Inside .navbar -->
+
+      <div class="mobile-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      
+      <!-- Default: Moon icon -->
+      </button>
+
+      <div class="navbar-right">
+        <div class="nav-links">
+          
+          <a href="#/home">Home</a>
+          <a href="#/tutorials">Tutorials</a>
+          <a href="#/courses">Courses</a>
+          
+           <a href="#/about">About</a>
+           
+           
+          
+ 
+
+<!-- With this dropdown structure: -->
+<div class="more-dropdown">
+  <button class="more-dropbtn">
+    More <i class="fas fa-caret-down"></i>
+  </button>
+   <div class="more-dropdown-content">
+  <a href="https://www.ibm.com/artificial-intelligence" target="_blank">AI, ML, and Data Science</a>
+  <a href="https://www.geeksforgeeks.org/programming-language/" target="_blank">Programming Languages</a>
+
+  <div class="nested-dropdown">
+    <a href="#">Web Development Languages <i class="fas fa-caret-right"></i></a>
+    <div class="nested-dropdown-content">
+      <a href="https://www.w3schools.com/" target="_blank">Ebooks (W3Schools)</a>
+      <a href="https://www.youtube.com/@freecodecamp" target="_blank">Videos (freeCodeCamp)</a>
+      <a href="https://dev.to/tools" target="_blank">Tools (Dev.to)</a>
+    </div>
+  </div>
+
+  <a href="https://www.redhat.com/en/topics/devops" target="_blank">DevOps</a>
+  <a href="https://www.oracle.com/database/" target="_blank">Databases</a>
+  <a href="https://www.geeksforgeeks.org/computer-science/" target="_blank">Computer Science Subjects</a>
+  <a href="https://www.python.org/community/workshops/" target="_blank">Python Technologies</a>
+  <a href="https://www.cisco.com/site/us/en/learn/topics/security/index.html" target="_blank">Cyber Security</a>
+  <a href="https://www.guru99.com/software-testing.html" target="_blank">Software Testing</a>
+  <a href="https://www.geeksforgeeks.org/" target="_blank">All Categories</a>
+</div>
+
+</div>
+
+          <button class="dark-mode-toggle" onclick="toggleDarkMode()">
+        <i id="dark-icon" class="fas fa-moon"></i>
+      </button>
+          <!-- <a href="#">Contact</a> -->
+        </div>
+         <div class="auth-buttons">
+  <div class="user-menu">
+    <i class="fa-solid fa-user-tie fa-fade"></i>
+    <div id="profileMenu" class="user-dropdown">
+      <img src="https://wallpapers.com/images/hd/red-haired-avatar-profile-smnkf25c79akqndv.jpg" alt="User-logo ">
+      <p id="userEmail" class="user-email" title="You"></p>
+
+      <button id="dashboardBtn" onclick="window.location.href='dashboard.html'">
+        <i class="fa-solid fa-bars-progress"></i> Dashboard
+      </button>
+
+      <button id="profileBtn" onclick="window.location.href='profile.html'">
+        <i class="fa-solid fa-id-card"></i> My Profile
+      </button>
+
+      <button id="logoutBtn">
+        <i class="fa-solid fa-right-from-bracket"></i> Logout
+      </button>
+    </div>
+  </div>
+</div>
+
+        </div>
+      </div>
+    </nav>
+      <!-- All pages load here -->
+  <main id="app"></main>
+    
+     
+ 
+
+    </script>
+     <script
+      src="https://cdn.jsdelivr.net/npm/qrious@4.0.2/dist/qrious.min.js"
+      
+    ></script>
+      <!-- PDF.js library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.8.162/pdf.min.js"></script>
+  
+  <!-- Highlight.js library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/java.min.js"></script>
+  
+
+    <!-- coursepy pdf generation -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="js/course.js"></script>
+  <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+  import {
+    getAuth,
+    onAuthStateChanged,
+    signOut,
+  } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDyyOv23pgZau4NMap25ELNJeK2_q-hWQw",
+    authDomain: "my-auth-9ca91.firebaseapp.com",
+    projectId: "my-auth-9ca91",
+    storageBucket: "my-auth-9ca91.firebasestorage.app",
+    messagingSenderId: "982710575554",
+    appId: "1:982710575554:web:a6d86152f3fa5a003a365b",
+    measurementId: "G-KEYKG9C4CB",
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  const userGreeting = document.getElementById("userGreeting");
+  const logoutBtn = document.getElementById("logoutBtn");
+  const startBtn = document.getElementById("startBtn");
+  const content = document.getElementById("content");
+
+  // ✅ Auto-redirect protection
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      userGreeting.textContent = `Hello, ${user.displayName || user.email}`;
+      content.style.display = "block";
+    } else {
+      window.location.href = "index.html";
+    }
+  });
+
+ if (logoutBtn) {
+  logoutBtn.addEventListener("click", async () => {
+    const confirmLogout = confirm("Are you sure you want to logout From Easy Learn ?");
+
+    if (confirmLogout) {
+      await signOut(auth);
+      alert("You have been logged out successfully!");
+      window.location.href = "index.html";
+    }
+  });
+}
+
+
+  if (startBtn) {
+    startBtn.addEventListener("click", () => {
+      window.location.href = "course.html";
+    });
+  }
+  
+
+
+
+
+
+
+  
+     // Protect page + show user email
+onAuthStateChanged(auth, (user) => {
+  if (!user) {
+    window.location.href = "index.html";
+  } else {
+    const userEmailEl = document.getElementById("userEmail");
+    if (userEmailEl) { // ✅ check if element exists
+      // userEmailEl.textContent = "User: " + user.email;
+    
+  onAuthStateChanged(auth, (user) => {
+    if (user && userEmailEl) {
+      // Truncate email to 6-7 characters + dots
+      const email = user.email || "Unknown";
+      const displayEmail = email.length > 7 ? email.slice(0, 7) + "…" : email;
+      userEmailEl.textContent = "User: " +displayEmail;
+    }
+  });
+}
+  }
+});
+
+</script>
+<script src="js/course.js"></script>
+
+</body>
+</html>
+
+
+
+
+
+
+ 

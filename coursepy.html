@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Python Tutorial | Interactive Course</title>
+        <link rel="icon" type="image/png" href="/image/elearning.png" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <style>
+      header {
+        background: #007bff;
+        color: #fff;
+        padding: 15px;
+        text-align: center;
+        font-size: 1.6rem;
+        font-weight: bold;
+        letter-spacing: 1px;
+      }
+
+      .python-course-container {
+        max-width: 900px;
+        margin: 30px auto;
+        background: #fff;
+        border-radius: 15px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        padding: 25px;
+      }
+
+      .python-progress-container {
+        background: #e0e0e0;
+        border-radius: 20px;
+        overflow: hidden;
+        margin-bottom: 20px;
+        height: 25px;
+        position: relative;
+      }
+
+      .python-progress-bar {
+        height: 100%;
+        width: 0%;
+        background: #28a745;
+        transition: width 0.4s ease;
+      }
+
+      .python-progress-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 0.9rem;
+        color: #fff;
+        font-weight: bold;
+      }
+
+      .python-video-section {
+        background: #eef3ff;
+        padding: 20px;
+        border-radius: 12px;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      video {
+        width: 100%;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .python-content-section {
+        margin-bottom: 20px;
+        line-height: 1.7;
+      }
+
+      .python-controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 25px;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      button {
+        background: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        padding: 10px 18px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+      }
+
+      button:hover {
+        background: #0056b3;
+      }
+
+      #pythonMarkReadBtn.read {
+        background: #28a745 !important;
+      }
+
+      .python-modal {
+        display: none;
+        position: fixed;
+        z-index: 100;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        justify-content: center;
+        align-items: center;
+      }
+
+      .python-modal-content {
+        background: #fff;
+        padding: 30px;
+        text-align: center;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        animation: fadeIn 0.4s ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          transform: scale(0.8);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      .python-modal h2 {
+        font-size: 2rem;
+        color: #28a745;
+        margin-bottom: 10px;
+      }
+
+      #pythonBackBtn {
+        background: #ff9800;
+         padding: 11px;
+        text-align: center;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        animation: fadeIn 0.4s ease;
+        color: white;
+        text-decoration: none;
+      }
+
+      #pythonBackBtn:hover {
+        background:#ff9900e1;
+      }
+
+      canvas.python-confetti {
+        position: fixed;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        width: 100%;
+        height: 100%;
+        z-index: 200;
+      }
+
+      #pythonFinishBtn  {
+        background: #ff9800;
+        text-decoration: none;
+      }
+
+      #pythonFinishBtn:hover {
+        background: #e68900;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>🐍 Python Tutorial Course</header>
+
+    <div class="python-course-container">
+      <div class="python-progress-container">
+        <div class="python-progress-bar" id="pythonProgressBar"></div>
+        <div class="python-progress-text" id="pythonProgressText">0%</div>
+      </div>
+
+      <div class="python-video-section">
+        <video controls>
+          <source
+            src="https://www.w3schools.com/html/mov_bbb.mp4"
+            type="video/mp4"
+          />
+        </video>
+      </div>
+
+      <div class="python-content-section" id="pythonContent"></div>
+
+      <div class="python-controls">
+        <button id="pythonPrevBtn">
+          <i class="fa-solid fa-arrow-left"></i> Previous
+        </button>
+        <button id="pythonMarkReadBtn">Mark as Read ✅</button>
+        <button id="pythonNextBtn">
+          Next <i class="fa-solid fa-arrow-right"></i>
+        </button>
+        <button id="pythonFinishBtn" style="display: none">
+          🎓 Finish Course
+        </button>
+      </div>
+    </div>
+
+    <!-- 🎉 Popup Modal -->
+    <div class="python-modal" id="pythonCongratsModal">
+      <div class="python-modal-content">
+        <h2>🎉 Congratulations!</h2>
+        <p>You’ve successfully completed the Python Course!</p>
+        <button id="pythonDownloadCertificate">Download Certificate</button>
+        <a id="pythonBackBtn" href="coursepy.html">Back to Course</a>
+      </div>
+    </div>
+    <canvas class="python-confetti" id="pythonConfettiCanvas"></canvas>
+<script>
+/* ======================
+   Course data (15 lessons)
+   (You can expand/replace lesson.videoId for YouTube embeds later)
+   ====================== */
+const pythonContents = [
+  { title: "Lesson 1 — Introduction to Python", text: "Overview, history and setup." , videoId: "xvFZjo5PgG0"},
+  { title: "Lesson 2 — Python Syntax & Hello World", text: "Basic syntax, comments, and printing." , videoId: "sB_5fMb0GTA"},
+  { title: "Lesson 3 — Variables & Data Types", text: "Numbers, strings, booleans, type conversion." , videoId: "VchuKL44s6E"},
+  { title: "Lesson 4 — Operators & Expressions", text: "Arithmetic, comparison and logical operators." , videoId: "kqtD5dpn9C8"},
+  { title: "Lesson 5 — Control Flow (if/else)", text: "If, elif, else and nested conditions." , videoId: "HXNhEYq0xqc"},
+  { title: "Lesson 6 — Loops (for / while)", text: "for, while, break, continue, loop else." , videoId: "6iF8Xb7Z3wQ"},
+  { title: "Lesson 7 — Functions", text: "Defining functions, parameters, return values." , videoId: "9Os0o3wzS_I"},
+  { title: "Lesson 8 — Lists & Tuples", text: "Indexing, slicing, methods and immutability." , videoId: "R-HLU9Fl5ug"},
+  { title: "Lesson 9 — Dictionaries & Sets", text: "Key-value pairs, common patterns." , videoId: "ZdaZyG1Zq6k"},
+  { title: "Lesson 10 — File I/O", text: "Reading/writing files, with statement." , videoId: "k9TUPpGqYTo"},
+  { title: "Lesson 11 — Modules & Packages", text: "Importing, standard library overview." , videoId: "0oTh1CXRaQ0"},
+  { title: "Lesson 12 — Error Handling", text: "try/except/finally and debugging tips." , videoId: "NIWwJbo-9_8"},
+  { title: "Lesson 13 — OOP Basics", text: "Classes, objects, methods, inheritance." , videoId: "JeznW_7DlB0"},
+  { title: "Lesson 14 — Useful Libraries", text: "Overview: requests, pandas, numpy, matplotlib." , videoId: "7eh4d6sabA0"},
+  { title: "Lesson 15 — Project: Mini App", text: "Bring everything together in a small project." , videoId: "Z1Yd7upQsXY"}
+];
+
+/* ======================
+   LocalStorage keys (standardized)
+   ====================== */
+const LS_PROGRESS = "progress_python";
+const LS_COMPLETED = "completed_python";
+const LS_INDEX = "pythonCurrentIndex";
+const LS_READ = "pythonReadStates";
+
+/* ======================
+   State
+   ====================== */
+let pythonCurrentIndex = parseInt(localStorage.getItem(LS_INDEX)) || 0;
+let pythonProgress = parseFloat(localStorage.getItem(LS_PROGRESS)) || 0;
+let pythonReadStates = JSON.parse(localStorage.getItem(LS_READ)) || Array(pythonContents.length).fill(false);
+
+/* ======================
+   DOM refs
+   ====================== */
+const pythonProgressBar = document.getElementById("pythonProgressBar");
+const pythonProgressText = document.getElementById("pythonProgressText");
+const pythonContentDiv = document.getElementById("pythonContent");
+const pythonMarkReadBtn = document.getElementById("pythonMarkReadBtn");
+const pythonFinishBtn = document.getElementById("pythonFinishBtn");
+const pythonCongratsModal = document.getElementById("pythonCongratsModal");
+const pythonConfettiCanvas = document.getElementById("pythonConfettiCanvas");
+const pythonDownloadCertificateBtn = document.getElementById("pythonDownloadCertificate");
+const pythonBackBtn = document.getElementById("pythonBackBtn");
+
+/* ======================
+   Render video embed + notes
+   ====================== */
+function renderVideoSection(index = pythonCurrentIndex) {
+  const videoId = pythonContents[index].videoId;
+  // Replace the top <video> block with an iframe if videoId exists
+  const videoSection = document.querySelector(".python-video-section");
+  if (!videoSection) return;
+
+  videoSection.innerHTML = `
+    <div class="video-embed" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;">
+      <iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+    </div>
+  `;
+}
+
+/* ======================
+   Update content / UI
+   ====================== */
+function updatePythonContent() {
+  // clamp index
+  if (pythonCurrentIndex < 0) pythonCurrentIndex = 0;
+  if (pythonCurrentIndex >= pythonContents.length) pythonCurrentIndex = pythonContents.length - 1;
+
+  const item = pythonContents[pythonCurrentIndex];
+
+  renderVideoSection(pythonCurrentIndex);
+
+  pythonContentDiv.innerHTML = `
+    <h2 style="margin-bottom:8px">${item.title}</h2>
+    <p style="margin-bottom:14px; color:#333;">${item.text}</p>
+    <div style="font-size:0.9rem;color:#666;">Lesson ${pythonCurrentIndex + 1} of ${pythonContents.length}</div>
+  `;
+
+  pythonProgressBar.style.width = `${pythonProgress}%`;
+  pythonProgressText.textContent = `${Math.round(pythonProgress)}%`;
+
+  // update mark-read button style
+  pythonMarkReadBtn.classList.toggle("read", pythonReadStates[pythonCurrentIndex]);
+
+  // finish & next button visibility
+  const nextBtn = document.getElementById("pythonNextBtn");
+  const prevBtn = document.getElementById("pythonPrevBtn");
+
+  if (pythonCurrentIndex === pythonContents.length - 1) {
+    pythonFinishBtn.style.display = "inline-block";
+    if (nextBtn) nextBtn.style.display = "none";
+  } else {
+    pythonFinishBtn.style.display = "none";
+    if (nextBtn) nextBtn.style.display = "inline-block";
+  }
+
+  prevBtn.disabled = pythonCurrentIndex === 0;
+  if (prevBtn) prevBtn.style.opacity = prevBtn.disabled ? "0.6" : "1";
+}
+
+/* ======================
+   Navigation handlers
+   ====================== */
+document.getElementById("pythonNextBtn").addEventListener("click", () => {
+  if (pythonCurrentIndex < pythonContents.length - 1) {
+    pythonCurrentIndex++;
+    localStorage.setItem(LS_INDEX, pythonCurrentIndex);
+    updatePythonContent();
+  }
+});
+document.getElementById("pythonPrevBtn").addEventListener("click", () => {
+  if (pythonCurrentIndex > 0) {
+    pythonCurrentIndex--;
+    localStorage.setItem(LS_INDEX, pythonCurrentIndex);
+    updatePythonContent();
+  }
+});
+
+/* ======================
+   Mark as read
+   ====================== */
+pythonMarkReadBtn.addEventListener("click", () => {
+  if (!pythonReadStates[pythonCurrentIndex]) {
+    pythonReadStates[pythonCurrentIndex] = true;
+    // each lesson contributes equal share
+    pythonProgress += 100 / pythonContents.length;
+    pythonProgress = Math.min(pythonProgress, 100);
+    // persist
+    localStorage.setItem(LS_READ, JSON.stringify(pythonReadStates));
+    localStorage.setItem(LS_PROGRESS, String(pythonProgress));
+    // Also update dashboard-specific generic keys for compatibility if you want (optional)
+    // localStorage.setItem("progress", String(pythonProgress)); // if your other dashboard uses 'progress'
+  }
+  pythonMarkReadBtn.classList.add("read");
+  pythonProgressBar.style.width = `${pythonProgress}%`;
+  pythonProgressText.textContent = `${Math.round(pythonProgress)}%`;
+});
+
+/* ======================
+   Finish course -> set completion date, show modal, confetti
+   ====================== */
+pythonFinishBtn.addEventListener("click", () => {
+  if (pythonProgress < 100) {
+    pythonProgress = 100;
+    localStorage.setItem(LS_PROGRESS, "100");
+  }
+  const date = new Date().toLocaleString();
+  localStorage.setItem(LS_COMPLETED, date);
+
+  pythonProgressBar.style.width = "100%";
+  pythonProgressText.textContent = "100%";
+
+  showPythonModal();
+  launchPythonConfetti();
+});
+
+/* ======================
+   Modal controls
+   ====================== */
+function showPythonModal() {
+  if (pythonCongratsModal) pythonCongratsModal.style.display = "flex";
+}
+if (pythonBackBtn) {
+  // if Back is an anchor with href, clicking it will navigate; keep both behaviors:
+  pythonBackBtn.addEventListener("click", (e) => {
+    // if it's an <a href>, let it navigate; if not, just hide modal
+    if (pythonBackBtn.tagName.toLowerCase() === "a") {
+      // let default behavior (navigation) happen
+    } else {
+      pythonCongratsModal.style.display = "none";
+    }
+  });
+}
+
+/* ======================
+   Confetti (simple canvas animation)
+   ====================== */
+function launchPythonConfetti() {
+  const canvas = pythonConfettiCanvas;
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  canvas.style.display = "block";
+
+  const particles = Array.from({ length: 160 }, () => ({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height - canvas.height,
+    r: Math.random() * 6 + 2,
+    vx: (Math.random() - 0.5) * 3,
+    vy: Math.random() * 3 + 2,
+    color: `hsl(${Math.random() * 360}, 90%, 60%)`
+  }));
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = p.color;
+      ctx.fill();
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy += 0.03;
+      if (p.y > canvas.height) p.y = -10;
+      if (p.x > canvas.width) p.x = 0;
+      if (p.x < 0) p.x = canvas.width;
+    });
+  }
+
+  const interval = setInterval(draw, 20);
+  setTimeout(() => {
+    clearInterval(interval);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    canvas.style.display = "none";
+  }, 5000);
+}
+
+/* ======================
+   Certificate (PDF) generation
+   Uses jsPDF UMD build (you already included CDN)
+   ====================== */
+async function generateCertificatePDF(name = "Learner") {
+  // Wait for jspdf to be available
+  if (typeof window.jspdf === "undefined" && typeof window.jsPDF === "undefined") {
+    alert("Certificate generator is not loaded. Please include jsPDF.");
+    return;
+  }
+
+  // Use UMD exposed object
+  const jsPDF = window.jspdf && window.jspdf.jsPDF ? window.jspdf.jsPDF : (window.jsPDF ? window.jsPDF : null);
+  if (!jsPDF) {
+    alert("jsPDF not found.");
+    return;
+  }
+
+  const doc = new jsPDF({ orientation: "landscape", unit: "pt", format: "a4" });
+  const w = doc.internal.pageSize.getWidth();
+  const h = doc.internal.pageSize.getHeight();
+
+  // Background border
+  doc.setFillColor(245, 245, 255);
+  doc.rect(0, 0, w, h, "F");
+
+  doc.setDrawColor(60, 60, 120);
+  doc.setLineWidth(3);
+  doc.rect(30, 30, w - 60, h - 60);
+
+  // Title
+  doc.setFontSize(28);
+  doc.setTextColor(60, 60, 120);
+  doc.setFont("helvetica", "bold");
+  doc.text("EasyLearn Academy", w / 2, 90, { align: "center" });
+
+  doc.setFontSize(20);
+  doc.setTextColor(0, 0, 0);
+  doc.setFont("helvetica", "normal");
+  doc.text("Certificate of Completion", w / 2, 140, { align: "center" });
+
+  // Recipient
+  doc.setFontSize(36);
+  doc.setTextColor(20, 80, 140);
+  doc.setFont("helvetica", "bold");
+  doc.text(String(name), w / 2, 220, { align: "center" });
+
+  // Body text
+  doc.setFontSize(14);
+  doc.setTextColor(0, 0, 0);
+  doc.setFont("helvetica", "normal");
+  const body = `This is to certify that ${name} has successfully completed the Python Tutorial Course on EasyLearn Academy.`;
+  doc.text(body, w / 2, 260, { align: "center", maxWidth: w - 160 });
+
+  // Course name & date
+  const dateStr = localStorage.getItem(LS_COMPLETED) || new Date().toLocaleDateString();
+  doc.setFontSize(12);
+  doc.text(`Course: Python Tutorial Course`, 80, h - 110);
+  doc.text(`Date: ${dateStr}`, 80, h - 90);
+
+  // Signature placeholder
+  doc.setFontSize(12);
+  doc.text("LokanthMohanty",  w / 2, 90, { align: "center" });
+   doc.text("Instructor Signature", w - 210, h - 90);
+
+  // Save
+  doc.save(`EduSpark_Python_Certificate_${name.replace(/\s+/g, "_")}.pdf`);
+}
+
+/* ======================
+   Hook certificate button
+   ====================== */
+if (pythonDownloadCertificateBtn) {
+  pythonDownloadCertificateBtn.addEventListener("click", async () => {
+    const name = prompt("Enter your name for the certificate:") || "Learner";
+    // Ensure course is marked complete
+    if (!localStorage.getItem(LS_COMPLETED)) {
+      const date = new Date().toLocaleString();
+      localStorage.setItem(LS_COMPLETED, date);
+      localStorage.setItem(LS_PROGRESS, "100");
+    }
+    await generateCertificatePDF(name);
+  });
+}
+
+/* ======================
+   Initialize on load
+   ====================== */
+window.addEventListener("load", () => {
+  // ensure arrays length matches content length
+  if (!Array.isArray(pythonReadStates) || pythonReadStates.length !== pythonContents.length) {
+    pythonReadStates = Array(pythonContents.length).fill(false);
+    localStorage.setItem(LS_READ, JSON.stringify(pythonReadStates));
+  }
+
+  // ensure progress value is numeric
+  pythonProgress = Math.min(100, Math.max(0, parseFloat(pythonProgress) || 0));
+
+  updatePythonContent();
+});
+</script>
+ 
+    <!-- coursepy pdf generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  </body>
+</html>

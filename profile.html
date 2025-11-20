@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Easy Learn | Profile</title>
+        <link rel="icon" type="image/png" href="/image/elearning.png" />
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #f4f6f9;
+        margin: 0;
+        padding: 20px;
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #007bff;
+        color: white;
+        padding: 15px 20px;
+      }
+      header h1 {
+        margin: 0;
+        font-size: 22px;
+      }
+      header button {
+        background: white;
+        color: #007bff;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-left: 10px;
+      }
+      .profile-card {
+        background: white;
+        max-width: 400px;
+        margin: 50px auto;
+        padding: 30px;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+      .profile-card h2 {
+        margin-bottom: 10px;
+        color: #007bff;
+      }
+      .profile-card p {
+        font-size: 16px;
+        color: #444;
+        margin: 5px 0;
+      }
+      .profile-card button {
+        margin-top: 20px;
+        padding: 10px 20px;
+        font-size: 15px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+      .logout-btn {
+        background: #dc3545;
+        color: white;
+      }
+      .back-btn {
+        background: #28a745;
+        color: white;
+        margin-left: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>👤 My Profile</h1>
+      <div>
+        <button id="coursesBtn">Courses</button>
+        <button id="logoutBtn">Logout</button>
+      </div>
+    </header>
+
+    <div class="profile-card">
+      <h2>Welcome!</h2>
+      <p id="userEmail">Loading...</p>
+      <p id="userId"></p>
+      <button class="logout-btn" id="logoutBtn2">Logout</button>
+      <button class="back-btn" id="coursesBtn2">Go to Courses</button>
+    </div>
+
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+      import {
+        getAuth,
+        signOut,
+        onAuthStateChanged,
+      } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+
+      // 🔹 Replace with your Firebase config
+      const firebaseConfig = {
+        apiKey: "AIzaSyDyyOv23pgZau4NMap25ELNJeK2_q-hWQw",
+        authDomain: "my-auth-9ca91.firebaseapp.com",
+        projectId: "my-auth-9ca91",
+        storageBucket: "my-auth-9ca91.firebasestorage.app",
+        messagingSenderId: "982710575554",
+        appId: "1:982710575554:web:a6d86152f3fa5a003a365b",
+        measurementId: "G-KEYKG9C4CB",
+      };
+
+      // Init Firebase
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+
+      // Show user info
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          document.getElementById(
+            "userEmail"
+          ).textContent = `📧 Email: ${user.email}`;
+          document.getElementById("userId").textContent = `🆔 UID: ${user.uid}`;
+        } else {
+          window.location.href = "index.html"; // redirect if not logged in
+        }
+      });
+
+      // Logout
+      function doLogout() {
+        signOut(auth).then(() => {
+          window.location.href = "index.html";
+        });
+      }
+
+      document.getElementById("logoutBtn").addEventListener("click", doLogout);
+      document.getElementById("logoutBtn2").addEventListener("click", doLogout);
+
+      // Go to courses
+      document.getElementById("coursesBtn").addEventListener("click", () => {
+        window.location.href = "course.html";
+      });
+      document.getElementById("coursesBtn2").addEventListener("click", () => {
+        window.location.href = "course.html";
+      });
+    </script>
+  </body>
+</html>
